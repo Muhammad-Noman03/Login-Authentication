@@ -34,60 +34,77 @@ signInInputs.forEach(input => {
 
 
 signUpBtn.addEventListener('click', () => {
-    const getValues = getData(name, signUpEmail, signUpPassword, confirmPassword);
+    const getValues = getSignUpData(name, signUpEmail, signUpPassword, confirmPassword);
 
-    const valid = checkValidation(getValues);
-    console.log(valid);
+    const valid = signUpValidation(getValues);
 
     if (valid) {
         data.push(getValues);
+
+
+        name.value = ''
+        signUpEmail.value = ''
+        signInPassword.value = ''
+        confirmPassword.value = ''
     }
 
 })
 
-// FUNCTION TO GET DATA FROM SIGN UP INPUTS
-function getData(n, se, sp, cp) {
-    const value = {
+// FUNCTION TO GET SIGN UP DATA FROM SIGN UP INPUTS
+function getSignUpData(n, se, sp, cp) {
+    return {
         name: n.value,
         email: se.value,
         password: sp.value,
         confirmPassword: cp.value
     }
+}
 
-    n.value = ''
-    se.value = ''
-    sp.value = ''
-    cp.value = ''
-
-    return value
+// FUNCTION TO GET SIGN IN DATA FROM SIGN UP INPUTS
+function getSignInData(se, sp) {
+    return {
+        email: se.value,
+        password: sp.value
+    }
 }
 
 // FUNCTION TO CHECK EMPTY SIGN UP INPUTS
 function checkInput(input, btn) {
     let allFilled = true;
+
     input.forEach(input => {
         if (!input.value.trim()) {
             allFilled = false;
             btn.classList.add('not-filled');
         }
     });
+
     btn.disabled = !allFilled;
+
     if (!btn.disabled) {
         btn.classList.remove('not-filled')
     }
-    console.log(btn.disabled);
 }
 
 // FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
-function checkValidation(data) {
+function signUpValidation(data) {
 
     const { email, password, confirmPassword } = data;
-    console.log(email);
-    console.log(password);
-    console.log(confirmPassword);
-    console.log(emailRegEx.test(email));
 
     if (!emailRegEx.test(email) || password !== confirmPassword) {
+        return false;
+    }
+
+    return true;
+}
+
+// FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
+function signUpValidation(signUpData, signInData) {
+
+    const { signUpEmail, signUpPassword } = signUpData;
+    const { signInEmail, signInPassword } = signInData;
+
+    if (signInEmail !== signUpEmail || signInPassword !== signUpPassword) {
         return false;
     }
 
