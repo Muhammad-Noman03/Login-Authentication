@@ -44,8 +44,23 @@ signUpBtn.addEventListener('click', () => {
 
         name.value = ''
         signUpEmail.value = ''
-        signInPassword.value = ''
+        signUpPassword.value = ''
         confirmPassword.value = ''
+    }
+
+})
+
+signInBtn.addEventListener('click', () => {
+    const signInValues = getSignInData(signInEmail, signInPassword);
+    const signUpValues = getSignInData(signInEmail, signInPassword);
+
+    const valid = signInValidation(signUpValues, signInValues);
+
+    if (valid) {
+        data.push(signInValues);
+
+        signInEmail.value = ''
+        signInPassword.value = ''
     }
 
 })
@@ -99,7 +114,7 @@ function signUpValidation(data) {
 }
 
 // FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
-function signUpValidation(signUpData, signInData) {
+function signInValidation(signUpData, signInData) {
 
     const { signUpEmail, signUpPassword } = signUpData;
     const { signInEmail, signInPassword } = signInData;
