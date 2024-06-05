@@ -1,16 +1,20 @@
 // SELECTORS
+// SIGN UP SELECTORS
 const signUpInputs = document.querySelectorAll('.signUp-inputs');
 const name = document.querySelector('#name');
 const signUpEmail = document.querySelector('#signUpEmail');
 const signUpPassword = document.querySelector('#signUpPassword');
 const confirmPassword = document.querySelector('#confirmPassword');
 const signUpBtn = document.querySelector('#signUpBtn');
+const signUpForm = document.querySelector('#signUpForm');
+const signUpFormBtn = document.querySelector('#signUpFormBtn');
+
 
 // VARIABLES
 const data = []
 const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-
+// SIGN UP EMPTY INPUT CHECK
 signUpInputs.forEach(input => {
     input.addEventListener('input', () => checkInput(signUpInputs, signUpBtn))
 })
