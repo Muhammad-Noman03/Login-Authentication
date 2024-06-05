@@ -44,6 +44,7 @@ signUpBtn.addEventListener('click', () => {
     if (valid) {
         signUpData.push(getValues);
 
+        console.log(signUpData);
 
         name.value = ''
         signUpEmail.value = ''
@@ -67,12 +68,13 @@ signInFormBtn.addEventListener('click', () => {
 
 signInBtn.addEventListener('click', () => {
     const signInValues = getSignInData(signInEmail, signInPassword);
-    const signUpValues = getSignInData(signInEmail, signInPassword);
+    const signUpValues = signUpData
 
     const valid = signInValidation(signUpValues, signInValues);
 
     if (valid) {
         signInData.push(signInValues);
+        console.log(signInData);
 
         signInEmail.value = ''
         signInPassword.value = ''
@@ -84,8 +86,8 @@ signInBtn.addEventListener('click', () => {
 function getSignUpData(n, se, sp, cp) {
     return {
         name: n.value,
-        email: se.value,
-        password: sp.value,
+        signUpEmail: se.value,
+        signUpPassword: sp.value,
         confirmPassword: cp.value
     }
 }
@@ -93,8 +95,8 @@ function getSignUpData(n, se, sp, cp) {
 // FUNCTION TO GET SIGN IN DATA FROM SIGN UP INPUTS
 function getSignInData(se, sp) {
     return {
-        email: se.value,
-        password: sp.value
+        signInEmail: se.value,
+        signInPassword: sp.value
     }
 }
 
@@ -119,9 +121,9 @@ function checkInput(input, btn) {
 // FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
 function signUpValidation(data) {
 
-    const { email, password, confirmPassword } = data;
+    const { signUpEmail, signUpPassword, confirmPassword } = data;
 
-    if (!emailRegEx.test(email) || password !== confirmPassword) {
+    if (!emailRegEx.test(signUpEmail) || signUpPassword !== confirmPassword) {
         return false;
     }
 
@@ -130,15 +132,21 @@ function signUpValidation(data) {
 
 // FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
 function signInValidation(signUpData, signInData) {
-
-    const { signUpEmail, signUpPassword } = signUpData;
     const { signInEmail, signInPassword } = signInData;
 
-    if (signInEmail !== signUpEmail || signInPassword !== signUpPassword) {
-        return false;
-    }
+    let isCorrect = false;
 
-    return true;
+    signUpData.forEach(data => {
+        const { signUpEmail, signUpPassword } = data;
+
+        if (signInEmail === signUpEmail && signInPassword === signUpPassword) {
+            isCorrect = true;
+            return isCorrect;
+        }
+
+    })
+
+    return isCorrect;
 }
 
 // CHECK INITIALLY FOR EMPTY INPUTS
