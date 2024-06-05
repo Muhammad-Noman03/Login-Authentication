@@ -9,6 +9,14 @@ const signUpBtn = document.querySelector('#signUpBtn');
 const signUpForm = document.querySelector('#signUpForm');
 const signUpFormBtn = document.querySelector('#signUpFormBtn');
 
+// SIGN IN SELECTORS
+const signInInputs = document.querySelectorAll('.signIn-inputs');
+const signInEmail = document.querySelector('#signInEmail');
+const signInPassword = document.querySelector('#signInPassword');
+const signInBtn = document.querySelector('#signInBtn');
+const signInForm = document.querySelector('#signInForm');
+const signInFormBtn = document.querySelector('#signInFormBtn');
+
 
 // VARIABLES
 const data = []
@@ -17,6 +25,11 @@ const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 // SIGN UP EMPTY INPUT CHECK
 signUpInputs.forEach(input => {
     input.addEventListener('input', () => checkInput(signUpInputs, signUpBtn))
+})
+
+// SIGN IN EMPTY INPUT CHECK
+signInInputs.forEach(input => {
+    input.addEventListener('input', () => checkInput(signInInputs, signInBtn))
 })
 
 
@@ -80,3 +93,7 @@ function checkValidation(data) {
 
     return true;
 }
+
+// CHECK INITIALLY FOR EMPTY INPUTS
+checkInput(signInInputs, signInBtn)
+checkInput(signUpInputs, signUpBtn)
