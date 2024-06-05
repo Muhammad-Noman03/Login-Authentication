@@ -19,19 +19,22 @@ const signInFormBtn = document.querySelector('#signInFormBtn');
 
 
 // VARIABLES
-const data = []
+const signInData = []
+const signUpData = []
 const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+let isSignIn = true;
 
 // SIGN UP EMPTY INPUT CHECK
 signUpInputs.forEach(input => {
     input.addEventListener('input', () => checkInput(signUpInputs, signUpBtn))
 })
 
-// SIGN IN EMPTY INPUT CHECK
-signInInputs.forEach(input => {
-    input.addEventListener('input', () => checkInput(signInInputs, signInBtn))
+signUpFormBtn.addEventListener('click', () => {
+    signInForm.classList.add('hidden')
+    signInForm.classList.remove('flex')
+    signUpForm.classList.add('flex')
+    signUpForm.classList.remove('hidden')
 })
-
 
 signUpBtn.addEventListener('click', () => {
     const getValues = getSignUpData(name, signUpEmail, signUpPassword, confirmPassword);
@@ -39,7 +42,7 @@ signUpBtn.addEventListener('click', () => {
     const valid = signUpValidation(getValues);
 
     if (valid) {
-        data.push(getValues);
+        signUpData.push(getValues);
 
 
         name.value = ''
@@ -50,6 +53,18 @@ signUpBtn.addEventListener('click', () => {
 
 })
 
+// SIGN IN EMPTY INPUT CHECK
+signInInputs.forEach(input => {
+    input.addEventListener('input', () => checkInput(signInInputs, signInBtn))
+})
+
+signInFormBtn.addEventListener('click', () => {
+    signUpForm.classList.remove('flex')
+    signUpForm.classList.add('hidden')
+    signInForm.classList.remove('hidden')
+    signInForm.classList.add('flex')
+})
+
 signInBtn.addEventListener('click', () => {
     const signInValues = getSignInData(signInEmail, signInPassword);
     const signUpValues = getSignInData(signInEmail, signInPassword);
@@ -57,7 +72,7 @@ signInBtn.addEventListener('click', () => {
     const valid = signInValidation(signUpValues, signInValues);
 
     if (valid) {
-        data.push(signInValues);
+        signInData.push(signInValues);
 
         signInEmail.value = ''
         signInPassword.value = ''
