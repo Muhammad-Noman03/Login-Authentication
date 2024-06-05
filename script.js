@@ -50,6 +50,8 @@ signUpBtn.addEventListener('click', () => {
         signUpEmail.value = ''
         signUpPassword.value = ''
         confirmPassword.value = ''
+
+        checkInput(signUpInputs, signUpBtn)
     }
 
 })
@@ -78,6 +80,8 @@ signInBtn.addEventListener('click', () => {
 
         signInEmail.value = ''
         signInPassword.value = ''
+
+        checkInput(signInInputs, signInBtn)
     }
 
 })
