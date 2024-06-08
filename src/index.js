@@ -1,5 +1,6 @@
 // IMPORT FIREBASE FUNCTIONS THROUGH MODULES
 import { app } from "./firebase.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // SELECTORS
 // SIGN UP SELECTORS
@@ -49,10 +50,12 @@ signUpBtn.addEventListener('click', () => {
 
         console.log(signUpData);
 
-        name.value = ''
-        signUpEmail.value = ''
-        signUpPassword.value = ''
-        confirmPassword.value = ''
+        name.value = '';
+        signUpEmail.value = '';
+        signUpPassword.value = '';
+        confirmPassword.value = '';
+
+        createUser(getValues.signUpEmail, getValues.signUpPassword)
 
         checkInput(signUpInputs, signUpBtn)
     }
@@ -154,6 +157,29 @@ function signInValidation(signUpData, signInData) {
     })
 
     return isCorrect;
+}
+
+// FUNCTION TO CREATE USER WITH EMAIL AND PASSWORD USING FIREBASE
+function createUser(email, password) {
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed up 
+            console.log(userCredential);
+
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+        })
+        .catch((error) => {
+            console.log(error);
+
+            const errorCode = error.code;
+            console.log(errorCode);
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // ..
+        });
 }
 
 // CHECK INITIALLY FOR EMPTY INPUTS
