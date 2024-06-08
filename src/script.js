@@ -1,3 +1,6 @@
+// IMPORT FIREBASE FUNCTIONS THROUGH MODULES
+import { app } from "./firebase.js";
+
 // SELECTORS
 // SIGN UP SELECTORS
 const signUpInputs = document.querySelectorAll('.signUp-inputs');
@@ -19,10 +22,10 @@ const signInFormBtn = document.querySelector('#signInFormBtn');
 
 
 // VARIABLES
+const auth = getAuth(app);
 const signInData = []
 const signUpData = []
 const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-let isSignIn = true;
 
 // SIGN UP EMPTY INPUT CHECK
 signUpInputs.forEach(input => {
