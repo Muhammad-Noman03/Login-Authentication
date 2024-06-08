@@ -1,6 +1,6 @@
 // IMPORT FIREBASE FUNCTIONS THROUGH MODULES
 import { app } from "./firebase.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 // SELECTORS
 // SIGN UP SELECTORS
@@ -25,7 +25,6 @@ const signInFormBtn = document.querySelector('#signInFormBtn');
 // VARIABLES
 const auth = getAuth(app);
 const signInData = []
-const signUpData = []
 const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 // SIGN UP EMPTY INPUT CHECK
@@ -46,10 +45,6 @@ signUpBtn.addEventListener('click', () => {
     const valid = signUpValidation(getValues);
 
     if (valid) {
-        signUpData.push(getValues);
-
-        console.log(signUpData);
-
         name.value = '';
         signUpEmail.value = '';
         signUpPassword.value = '';
@@ -76,7 +71,6 @@ signInFormBtn.addEventListener('click', () => {
 
 signInBtn.addEventListener('click', () => {
     const signInValues = getSignInData(signInEmail, signInPassword);
-    const signUpValues = signUpData
 
     const valid = signInValidation(signUpValues, signInValues);
 
@@ -140,29 +134,33 @@ function signUpValidation(data) {
     return true;
 }
 
-// FUNCTION TO CHECK EMAIL VALIDATION AND PASSWORD CONFIRMATION
-function signInValidation(signUpData, signInData) {
-    const { signInEmail, signInPassword } = signInData;
-
-    let isCorrect = false;
-
-    signUpData.forEach(data => {
-        const { signUpEmail, signUpPassword } = data;
-
-        if (signInEmail === signUpEmail && signInPassword === signUpPassword) {
-            isCorrect = true;
-            return isCorrect;
-        }
-
-    })
-
-    return isCorrect;
-}
-
 // FUNCTION TO CREATE USER WITH EMAIL AND PASSWORD USING FIREBASE
 function createUser(email, password) {
 
     createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed up 
+            console.log(userCredential);
+
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+        })
+        .catch((error) => {
+            console.log(error);
+
+            const errorCode = error.code;
+            console.log(errorCode);
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // ..
+        });
+}
+
+// FUNCTION TO SIGN IN USER WITH EMAIL AND PASSWORD USING FIREBASE
+function signInUser(email, password) {
+
+    signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up 
             console.log(userCredential);
