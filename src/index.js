@@ -72,18 +72,13 @@ signInFormBtn.addEventListener('click', () => {
 signInBtn.addEventListener('click', () => {
     const signInValues = getSignInData(signInEmail, signInPassword);
 
-    const valid = signInValidation(signUpValues, signInValues);
+    signInUser(signInValues.signInEmail, signInValues.signInPassword);
 
-    if (valid) {
-        signInData.push(signInValues);
-        console.log(signInData);
+    signInEmail.value = '';
+    signInPassword.value = '';
 
-        signInEmail.value = ''
-        signInPassword.value = ''
 
-        checkInput(signInInputs, signInBtn)
-    }
-
+    checkInput(signInInputs, signInBtn)
 })
 
 // FUNCTION TO GET SIGN UP DATA FROM SIGN UP INPUTS
